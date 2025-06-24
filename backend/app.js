@@ -7,7 +7,7 @@ const app = express();
 
 // Configuración CORS más permisiva para desarrollo
 app.use(cors({
-  origin: true, // Permite todos los orígenes (solo para desarrollo)
+  origin: 'http://localhost:3000', // Permite todos los orígenes (solo para desarrollo)
   credentials: true
 }));
 
@@ -46,6 +46,90 @@ app.get('/api/bikes', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+
+/** 
+ * CÓDIGO PARTE 2
+ * INTEGRACIÓN PPROVEEDOR 
+ * TABLA DATABASE
+ * 
+ * 
+ * **/
+
+// Añade estas rutas después de las existentes
+
+// Ruta para obtener todos los proveedores
+app.get('/api/suppliers', async (req, res) => {
+  console.log('Llegó petición a /api/suppliers'); // Debug 1
+  
+  try {
+    const [rows, fields] = await pool.query('SELECT * FROM suppliers');
+    console.log('Resultado de query:', rows); // Debug 2
+    res.json(rows);
+  } catch (err) {
+    console.error('Error completo:', err); // Debug detallado
+    res.status(500).json({ 
+      error: 'Database error',
+      details: err.message,
+      sql: err.sql 
+    });
+  }
+});
+
+// Ruta para agregar nuevo proveedor
+app.post('/api/suppliers', async (req, res) => {
+  const { name, contact_email, phone, component_specialty } = req.body;
+  
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO suppliers (name, contact_email, phone, component_specialty) VALUES (?, ?, ?, ?)',
+      [name, contact_email, phone, component_specialty]
+    );
+    res.status(201).json({ id: result.insertId, ...req.body });
+  } catch (err) {
+    console.error('Error adding supplier:', err);
+    res.status(500).json({ error: 'Failed to add supplier' });
+  }
+});
+
+// Ruta para actualizar proveedor
+app.put('/api/suppliers/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, contact_email, phone, component_specialty } = req.body;
+  
+  try {
+    await pool.query(
+      'UPDATE suppliers SET name = ?, contact_email = ?, phone = ?, component_specialty = ? WHERE id = ?',
+      [name, contact_email, phone, component_specialty, id]
+    );
+    res.json({ id, ...req.body });
+  } catch (err) {
+    console.error('Error updating supplier:', err);
+    res.status(500).json({ error: 'Failed to update supplier' });
+  }
+});
+
+// Ruta para eliminar proveedor
+app.delete('/api/suppliers/:id', async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    await pool.query('DELETE FROM suppliers WHERE id = ?', [id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Error deleting supplier:', err);
+    res.status(500).json({ error: 'Failed to delete supplier' });
+  }
+});
+
+/**
+ * CÓDIGO BACKEND PARTE 2
+ * INTEGRACIÓN PROVEEDORES
+ * 
+ * 
+ * 
+ */
+
+
 
 const PORT = 5001; // Cambiado a 5001 para evitar conflictos
 app.listen(PORT, '0.0.0.0', () => {
