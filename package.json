@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "mysql2": "^3.14.1",
-    "react-scripts": "^5.0.1"
-  }
-}
