@@ -1,0 +1,153 @@
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Estilos de carga */
+.loading {
+  text-align: center;
+  padding: 50px;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos de error */
+.error {
+  text-align: center;
+  padding: 30px;
+  background-color: #fdecea;
+  border-radius: 8px;
+  color: #d32f2f;
+  margin: 20px 0;
+}
+
+.error button {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* Resumen del inventario */
+.inventory-summary {
+  display: flex;
+  justify-content: space-around;
+  background-color: #e3f2fd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.inventory-summary p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+/* Tabla de bicicletas */
+.bike-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.bike-table th, .bike-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.bike-table th {
+  background-color: #2c3e50;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.bike-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.bike-table tr.out-of-stock {
+  color: #999;
+  background-color: #fff9f9;
+}
+
+.bike-table button {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.bike-table button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.bike-table button:last-child {
+  background-color: #2196f3;
+  color: white;
+}
+
+.bike-table button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.main-nav {
+  background: #2c3e50;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.main-nav a.active {
+  background: #3498db;
+}
+
+.main-nav a:hover {
+  text-decoration: underline;
+}

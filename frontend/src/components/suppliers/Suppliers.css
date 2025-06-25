@@ -1,0 +1,41 @@
+
+/* suppliers.css */
+.suppliers-container {
+  padding: 20px;
+}
+
+.suppliers-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.suppliers-list th, 
+.suppliers-list td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.suppliers-list th {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
