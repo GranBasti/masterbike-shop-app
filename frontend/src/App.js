@@ -17,6 +17,7 @@ const api = axios.create({
 
 // commit ejecutando
 // Realizando cambios
+// Problema solucionado 
 
 function BikesComponent() {
   const [bikes, setBikes] = useState([]);
