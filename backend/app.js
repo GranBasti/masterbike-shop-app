@@ -7,7 +7,9 @@ const app = express();
 
 // Configuración CORS más permisiva para desarrollo
 app.use(cors({
-  origin: 'http://localhost:3000', // Permite todos los orígenes (solo para desarrollo)
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
   credentials: true
 }));
 
@@ -128,8 +130,6 @@ app.delete('/api/suppliers/:id', async (req, res) => {
  * 
  * 
  */
-
-
 
 const PORT = 5001; // Cambiado a 5001 para evitar conflictos
 app.listen(PORT, '0.0.0.0', () => {
