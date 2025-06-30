@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
-
-
+import Suppliers from './components/suppliers/Suppliers'; // Asegúrate que la ruta sea correcta
 
 // Configuración global de Axios
 const api = axios.create({
-  baseURL: 'http://localhost:5001/api', // Asegúrate que coincide con tu backend
+  baseURL: 'http://localhost:5001/api',
   timeout: 10000,
 });
 
-function App() {
+
+// Aplicación funcionando 
+// Problema de carpeta frontend solucionado (contenia un .git que funcionaba como submódulo)
+// Componente de Bicicletas (extraído de tu código original)
+
+// commit ejecutando
+// Realizando cambios
+// Problema solucionado 
+
+function BikesComponent() {
   const [bikes, setBikes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,28 +28,18 @@ function App() {
     try {
       setLoading(true);
       setError(null);
-      
-      // Verificamos primero la conexión con el backend
       await api.get('/test');
-      
-      // Obtenemos los datos de bicicletas
       const response = await api.get('/bikes');
-      console.log('Datos recibidos:', response.data);
-      
-      // Transformamos los datos para manejar mejor los booleanos
       const formattedBikes = response.data.map(bike => ({
         ...bike,
-        is_available: bike.is_available === 1, // Convertir 1/0 a true/false
-        price: parseFloat(bike.price), // Asegurar que es número
-        rental_price: parseFloat(bike.rental_price) // Asegurar que es número
+        is_available: bike.is_available === 1,
+        price: parseFloat(bike.price),
+        rental_price: parseFloat(bike.rental_price)
       }));
-      
       setBikes(formattedBikes);
     } catch (err) {
       console.error('Error al cargar datos:', err);
       setError(err.message || 'Error al conectar con el servidor');
-      
-      // Datos de ejemplo para desarrollo
       if (process.env.NODE_ENV === 'development') {
         setBikes([{
           id: 1,
@@ -58,9 +57,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    fetchBikes();
-  }, []);
+  useEffect(() => { fetchBikes(); }, []);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('es-CO', {
@@ -69,34 +66,15 @@ function App() {
     }).format(amount);
   };
 
-  if (loading) {
-    return (
-      <div className="loading">
-        <div className="spinner"></div>
-        <p>Cargando inventario...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error">
-        <h2>Error</h2>
-        <p>{error}</p>
-        <button onClick={fetchBikes}>Reintentar conexión</button>
-      </div>
-    );
-  }
+  if (loading) return <div className="loading"><div className="spinner"></div><p>Cargando inventario...</p></div>;
+  if (error) return <div className="error"><h2>Error</h2><p>{error}</p><button onClick={fetchBikes}>Reintentar conexión</button></div>;
 
   return (
-    <div className="App">
+    <div>
       <h1>Tienda de Bicicletas Premium</h1>
-      
       <div className="inventory-summary">
         <p>Total de modelos: <strong>{bikes.length}</strong></p>
-        <p>Total en stock: <strong>
-          {bikes.reduce((sum, bike) => sum + bike.stock, 0)}
-        </strong></p>
+        <p>Total en stock: <strong>{bikes.reduce((sum, bike) => sum + bike.stock, 0)}</strong></p>
       </div>
       
       <table className="bike-table">
@@ -139,6 +117,44 @@ function App() {
         </tbody>
       </table>
     </div>
+  );
+}
+
+// Componente de Navegación
+function Navigation() {
+  const location = useLocation();
+  
+  return (
+    <nav className="main-nav">
+      <Link 
+        to="/" 
+        className={location.pathname === '/' ? 'active' : ''}
+      >
+        Bicicletas
+      </Link>
+      <Link 
+        to="/suppliers" 
+        className={location.pathname === '/suppliers' ? 'active' : ''}
+      >
+        Proveedores
+      </Link>
+    </nav>
+  );
+}
+
+// Componente principal App
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Navigation />
+        
+        <Routes>
+          <Route path="/" element={<BikesComponent />} />
+          <Route path="/suppliers" element={<Suppliers />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
