@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <header className="hero-section">
-        <h1>Bienvenido a BikeShop</h1>
+        <h1>Bienvenido a MasterBikes</h1>
         <p>Tu destino para todo en ciclismo</p>
       </header>
 

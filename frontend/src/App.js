@@ -94,7 +94,7 @@ function App() {
     <Router>
       <div className="App">
         <header>
-          <h1>BikeShop Premium</h1>
+          <h1>MasterBikes</h1>
           <Navigation cart={cart} setCartVisible={setCartVisible} />
         </header>
         

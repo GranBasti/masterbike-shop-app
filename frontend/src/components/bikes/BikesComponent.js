@@ -54,7 +54,7 @@ const BikesComponent = ({ addToCart }) => {
 
   return (
     <div className="bike-shop-container">
-      <h1>Tienda de Bicicletas Premium</h1>
+      <h1>Tienda de Bicicletas </h1>
       
       <div className="bike-grid">
         {bikes.map(bike => (
